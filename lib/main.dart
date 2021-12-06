@@ -1,11 +1,9 @@
-// ignore_for_file: avoid_print
-
 import 'package:firstapp/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() => runApp(
-  const MaterialApp(
+  MaterialApp(
     debugShowCheckedModeBanner: false,
     home: HomePage(),
   )
@@ -20,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final List<User> _users = [
+  List<User> _users = [
     User('Fouad ELhamri', '@fouad13', 'https://images.unsplash.com/photo-1504735217152-b768bcab5ebc?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=0ec8291c3fd2f774a365c8651210a18b', false),
     User('Mohamed', '@medDev', 'https://images.unsplash.com/photo-1503467913725-8484b65b0715?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=cf7f82093012c4789841f570933f88e3', false),
     User('Yahya Frontend', '@juniorFront', 'https://images.unsplash.com/photo-1507081323647-4d250478b919?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b717a6d0469694bbe6400e6bfe45a1da', false),
@@ -61,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey[850],
-              contentPadding: const EdgeInsets.all(0),
+              contentPadding: EdgeInsets.all(0),
               prefixIcon: Icon(Icons.search, color: Colors.grey.shade500,),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -78,21 +76,21 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Colors.grey.shade900,
-        child: _foundedUsers.isNotEmpty ? ListView.builder(
+        child: _foundedUsers.length > 0 ? ListView.builder(
           itemCount: _foundedUsers.length,
           itemBuilder: (context, index) {
             return Slidable(
-              actionPane: const SlidableDrawerActionPane(),
+              actionPane: SlidableDrawerActionPane(),
               actionExtentRatio: 0.25,
               child: userComponent(user: _foundedUsers[index]),
               actions: <Widget>[
-                IconSlideAction(
+                new IconSlideAction(
                   caption: 'Archive',
                   color: Colors.transparent,
                   icon: Icons.archive,
                   onTap: () => print("archive"),
                 ),
-                IconSlideAction(
+                new IconSlideAction(
                   caption: 'Share',
                   color: Colors.transparent,
                   icon: Icons.share,
@@ -100,13 +98,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
               secondaryActions: <Widget>[
-                IconSlideAction(
+                new IconSlideAction(
                   caption: 'More',
                   color: Colors.transparent,
                   icon: Icons.more_horiz,
                   onTap: () => print('More'),
                 ),
-                IconSlideAction(
+                new IconSlideAction(
                   caption: 'Delete',
                   color: Colors.transparent,
                   icon: Icons.delete,
@@ -114,15 +112,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             );
-          }) : const Center(child: Text("No users found", style: TextStyle(color: Colors.white),)),
+          }) : Center(child: Text("No users found", style: TextStyle(color: Colors.white),)),
       ),
     );
   }
 
   userComponent({required User user}) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -136,12 +134,12 @@ class _HomePageState extends State<HomePage> {
                   child: Image.network(user.image),
                 )
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(user.name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 5,),
+                  Text(user.name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
+                  SizedBox(height: 5,),
                   Text(user.username, style: TextStyle(color: Colors.grey[500])),
                 ]
               )
@@ -156,9 +154,9 @@ class _HomePageState extends State<HomePage> {
             child: AnimatedContainer(
               height: 35,
               width: 110,
-              duration: const Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 300),
               decoration: BoxDecoration(
-                color: user.isFollowedByMe ? Colors.blue[700] : const Color(0xffffff),
+                color: user.isFollowedByMe ? Colors.blue[700] : Color(0xffffff),
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: user.isFollowedByMe ? Colors.transparent : Colors.grey.shade700,)
               ),
